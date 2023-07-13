@@ -1,3 +1,4 @@
+const sanitize = require('mongo-sanitize')
 const express = require('express');
 const router = express.Router();
 const Users = require('../../../models/v1/users')
@@ -19,12 +20,15 @@ router.post('/', function (req, res){
 router.post('/login', (req, res) => {
     console.log(req.body);
     const{user}=req.body;
+    sanitizedUser=sanitize(user);
     const { 
         email, 
         password
-    } = user;
+    } = sanitizedUser;
+    
     Users.getUserByEmail(email, (error, user) => {
         if(error) {
+            console.log(error);
             return res.status(500).json({ code: 'UNKNOW_ERROR', message: 'Error inesperado. Intente mas tarde' })
         }
         if (user.password == password) {
