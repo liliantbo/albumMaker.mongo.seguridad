@@ -1,18 +1,18 @@
 import React, { useEffect } from "react";
+import { v4 as uuidv4 } from 'uuid';
 import Dropdown from 'react-bootstrap/Dropdown';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import axios from 'axios';
 
 import { useSelector, useDispatch } from 'react-redux';
 import { updateCourierList } from '../reducers/adminActions';
-import { ROL_ADMIN, ROL_OPERATOR, STATE_CANCELED, STATE_DELETED, STATE_DISPATCH } from "./Properties";
+import { ROL_ADMIN, STATE_CANCELED, STATE_DELETED, STATE_DISPATCH } from "./Properties";
 
 export default function OrderOptions({ album, onCourierChange, onCancelChange, onDeleteChange }) {
     //redux store
     const courierList = useSelector(state => state.adm.courierList);
     const user = useSelector(state => state.auth.user);
     const { rol } = user
-    const isOperador = rol === ROL_OPERATOR;
     const isAdmin = rol === ROL_ADMIN;
 
     //redux reducer
@@ -55,23 +55,20 @@ export default function OrderOptions({ album, onCourierChange, onCancelChange, o
     }, []);
 
     return (
-        <DropdownButton id="dropdown-basic-button" title={`${isAdmin?'Modificar Orden':'Asignar Courier'}`} size="sm">
-            {courierList && courierList.map((courier, index) => (
-                <Dropdown.Item key={index}
-                    onClick={() => courierHandler(courier.name)}
-                >{courier.name}</Dropdown.Item>
-            ))}
-            {isAdmin &&
+        <DropdownButton id="dropdown-basic-button" title={`${isAdmin ? 'Modificar Orden' : 'Asignar Courier'}`} size="sm">
+            {courierList?.map((courier, index) => (
+    <Dropdown.Item key={uuidv4()} onClick={() => courierHandler(courier.name)}>
+        {courier.name}
+    </Dropdown.Item>
+))}
+            {isAdmin && (
                 <>
                     <Dropdown.Divider />
-                    <Dropdown.Item
-                        onClick={() => cancelHandler()}
-                    >Cancelar</Dropdown.Item>
-                    <Dropdown.Item
-                        onClick={() => deleteHandler()}
-                    >Eliminar</Dropdown.Item>
+                    <Dropdown.Item onClick={() => cancelHandler()}>Cancelar</Dropdown.Item>
+                    <Dropdown.Item onClick={() => deleteHandler()}>Eliminar</Dropdown.Item>
                 </>
-            }
+            )}
         </DropdownButton>
     );
+    
 }

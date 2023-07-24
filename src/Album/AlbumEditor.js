@@ -1,4 +1,5 @@
 import { React, useRef} from "react";
+import { v4 as uuidv4 } from 'uuid';
 
 import { useSelector, useDispatch } from 'react-redux';
 import { albumComplete, updateImageList } from '../reducers/albumActions';
@@ -77,7 +78,7 @@ export default function AlbumEditor() {
                                 onDragStart={(e) => dragStart(e, index)}
                                 onDragEnter={(e) => dragEnter(e, index)}
                                 onDragEnd={(e) => drop(e, index)}
-                                key={index}
+                                key={uuidv4()}
                                 onDragOver={(e) => dragEnter(e, index)}
                                 onDrop={(e) => drop(e, index)}
                                 draggable

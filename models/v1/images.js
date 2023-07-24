@@ -1,18 +1,18 @@
 const AWS = require('aws-sdk');
 
 AWS.config.update({
-    accessKeyId: 'ASIATIFAYCUFZG3F3MH3',
-    secretAccessKey: 'mag3DSrw6BJ6aIVy1bcddDQxPuAoro3BoQEgjOgo',
+    accessKeyId: process.env.REACT_APP_AWS_ACCESS_KEY_ID,
+    secretAccessKey: process.env.REACT_APP_AWS_SECRET_ACCESS_KEY,
     region: 'us-east-1',
-    sessionToken: 'FwoGZXIvYXdzEEsaDB5V5DJaa6WGVnMl+iLBAS1LWjmVjIcD+BiqxUY8uRyyY0ZBnsSuldp4fgknpiVCsDmOZfdo2sWQBKkl7QJB/G4fSXXU1nj3h/6op19buDKJHQpx14jlQ1M3L8rHnWmnoD+1xwbRq5yQNl5aYrAMoICloA1NImDBrpCEtC0ISARBi1fCJMxyfAB5voHeM99S3eXSWHwulreA6mlXrg9xRn9IUk4jYENPPPeUyZFVYwYhJgcAqB7/jOZ6QdkanTJ/8EiijdIwAIydnPQOtjg51cco5O2ypQYyLaTPY4FCenpFcCdD+qikdduMyp+IblveDP+ynL1wd4T+BzUOW5Apc0/quGOF5Q=='
+    sessionToken: process.env.REACT_APP_AWS_SESSION_TOKEN
 });
 
 const s3 = new AWS.S3();
 
 const uploadToS3 = async ({ imageListNew, imageUrlList }, cb) => {
-    console.log("Models :: Images :: uploadToS3 :: imageListNew: ",
-        imageListNew && imageListNew.length,
-        "imageUrlList: ", imageUrlList && imageUrlList.length);
+    console.log("Models :: Images :: uploadToS3 :: imageListNew: ", imageListNew?.length,
+    "imageUrlList: ", imageUrlList?.length);
+    
     if (!imageListNew || imageListNew.length == 0) {
         return cb("Models :: Images :: uploadToS3 :: Error al ejecutar el uploadToS3");
     }
@@ -20,7 +20,7 @@ const uploadToS3 = async ({ imageListNew, imageUrlList }, cb) => {
     for (const image of imageListNew) {
         const { file, index } = image;
         const base64Data = file.item;
-        const newFile = new Buffer.from(base64Data.replace(/^data:image\/\w+;base64,/, ""), 'base64');
+        const newFile = Buffer.alloc(base64Data.replace(/^data:image\/\w+;base64,/, ''), 'base64');
         const type = base64Data.split(';')[0].split('/')[1];
 
         console.log("contenido de file: ", file)

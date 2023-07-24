@@ -1,4 +1,5 @@
 import React from 'react';
+import { v4 as uuidv4 } from 'uuid';
 import { useSelector } from 'react-redux';
 
 import AlbumTemplate from './AlbumTemplate';
@@ -20,7 +21,7 @@ export default function AlbumViewer() {
                             <div className="d-flex align-items-center justify-content-center 
                             border border-dark rounded d-inline-block w-100"
                             style={{ height: '5cm' }}
-                                key={index}
+                            key={uuidv4()}
                             >
                                 {item? (
                                     <img src={item} alt="Uploaded" className="img-fluid h-100"/>

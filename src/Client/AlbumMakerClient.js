@@ -3,7 +3,7 @@ import axios from "axios";
 
 import { useSelector, useDispatch } from 'react-redux';
 import { newAlbum, listAlbums, updateAlbumList } from '../reducers/albumActions';
-import { FLOW_LIST } from '../commonComponents/Properties';
+import { FLOW_LIST, FLOW_NEW } from '../commonComponents/Properties';
 
 import AlbumFooter from '../commonComponents/AlbumFooter';
 import AlbumList from '../commonComponents/AlbumList';
@@ -55,8 +55,10 @@ export default function AlbumMakerClient() {
         return <AlbumList albums={albums}
           editAlbum={editAlbum}
           deleteAlbum={deleteAlbum} />;
+      case FLOW_NEW:
+            return <AlbumMakerCreator/>;
       default:
-        return <AlbumMakerCreator />;
+        return null;
     }
   }
 

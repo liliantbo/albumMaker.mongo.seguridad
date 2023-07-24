@@ -20,7 +20,7 @@ router.post('/', function (req, res){
 router.post('/login', (req, res) => {
     console.log(req.body);
     const{user}=req.body;
-    sanitizedUser=sanitize(user);
+    let sanitizedUser=sanitize(user);
     const { 
         email, 
         password
@@ -46,7 +46,6 @@ router.post('/login', (req, res) => {
 //Api para logout y destruccion de la sesion
 router.post('/logout', (req, res) => {
     console.log(req.body);
-    const { user } = req.body;
     req.session.destroy((err) => {
       if (err) {
         console.error('Error al destruir la sesión:', err);

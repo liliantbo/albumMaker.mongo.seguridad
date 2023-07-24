@@ -3,14 +3,13 @@ import axios from "axios";
 import { format } from 'date-fns';
 
 import { useSelector, useDispatch } from 'react-redux';
-import { updateAlbumList, processComplete, saveComplete } from '../reducers/albumActions';
+import { updateAlbumList, saveComplete } from '../reducers/albumActions';
 import { FLOW_PROCESED, FLOW_SAVED } from '../commonComponents/Properties';
 
 
 import BillingViewer from '../BillingAndShipping/BillingViewer';
 import AlbumViewer from '../Album/AlbumViewer';
 import ProcessCompleteMessage from './ProcessCompleteMessage';
-import SaveToS3 from '../Aws/SaveToS3';
 import mongoToRedux from '../commonComponents/mongoToRedux';
 
 export default function OrderResume() {
@@ -92,7 +91,6 @@ export default function OrderResume() {
       })
       .catch((error) => {
         console.log('Error:', error);
-        //dispatch(processComplete());
       });
     }
   };

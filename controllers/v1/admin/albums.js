@@ -19,7 +19,7 @@ router.patch('/album', function (req, res) {
         console.log('Controllers :: Admin :: PatchAlbum :: Debe indicar una lista de álbumes');
         return res.status(500).json({ code: 'UNKNOW_ERROR', message: 'Error inesperado. Intente mas tarde' })
     }
-    updateAlbumList = albums.filter((album) => album.estado !== "DELETED");
+    let updateAlbumList = albums.filter((album) => album.estado !== "DELETED");
     for (const album of updateAlbumList) {
         Albums.updateAlbum(album, (error, updatedAlbum) => {
             if (error) {
